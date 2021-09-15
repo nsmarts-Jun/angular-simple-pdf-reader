@@ -1,6 +1,5 @@
-git commit -am "update"
+git commit -am "update1"
 
-git commit --amend --no-edit --date "Tue 5 Sep 2021 11:58:02 KST"
+git commit --amend --no-edit --date "Wed 15 Sep 2021 11:58:02 KST"
 
-
-git push origin branch1
+git push origin main
