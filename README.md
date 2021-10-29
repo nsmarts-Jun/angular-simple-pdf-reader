@@ -37,8 +37,27 @@ Fab Button 클릭, 버튼에 따라 너비,길이,비율에 맞게 이미지 썸
 this.dialogService.openDialogConfirm().subscribe(result => {
 			if (result) {
 
-
 private dialogService: DialogService
 
 this.dialogRef.close();
 
+changeProfileImage(imgFile) {
+		console.log(imgFile);
+		this.profileService.changeProfileImage(imgFile).subscribe(
+			(data: any) => {
+				console.log(data);
+				this.profileService.getUserProfile().subscribe(
+					(data: any) => {
+						console.log(data);
+						this.userInfo = data.user;
+						console.log(this.userInfo);
+					},
+					(err: any) => {
+						console.log(err);
+					}
+				)
+			}
+		), (err: any) => {
+			console.log(err);
+		}
+	}
