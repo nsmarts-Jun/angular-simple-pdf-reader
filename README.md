@@ -41,23 +41,3 @@ private dialogService: DialogService
 
 this.dialogRef.close();
 
-changeProfileImage(imgFile) {
-		console.log(imgFile);
-		this.profileService.changeProfileImage(imgFile).subscribe(
-			(data: any) => {
-				console.log(data);
-				this.profileService.getUserProfile().subscribe(
-					(data: any) => {
-						console.log(data);
-						this.userInfo = data.user;
-						console.log(this.userInfo);
-					},
-					(err: any) => {
-						console.log(err);
-					}
-				)
-			}
-		), (err: any) => {
-			console.log(err);
-		}
-	}
