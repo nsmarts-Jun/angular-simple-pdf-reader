@@ -1,12 +1,12 @@
 # angular-simple-pdf-reader
-qqwe123123
-111231123123qweqwe12312343
-12qweqwe1231233123qweqwe
-31212qqweqwe12312314
-asdqweq312312we122312qwe3312314123
-12312qwqqwewee312331224
+qqweqwe123123
+11123112qweq3123qweqwe12312343
+12qweqweweqwe1231233123qweqwe
+31212qqweqweqwe12312314
+asdqweq3qweq12312we122312qwe3312314123
+12312qwqweqwewee312331224
 
-git commit --amend --no-edit --date "FRI 19 NOV 2021 15:19:19 KST"
+git commit --amend --no-edit --date "MON 22 NOV 2021 9:19:19 KST"
 ## 개요
 
 웹 클라이언트 프레임워크인 Angular를 이용해, 국제 표준 전자 문서 형식인 PDF를 읽기, 저장, 공유 가능한 웹 서비스를 개발.
