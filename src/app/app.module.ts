@@ -13,6 +13,7 @@ import { BoardCanvasComponent } from './components/board-canvas/board-canvas.com
 import { BoardFabsComponent } from './components/board-fabs/board-fabs.component';
 
 import { DragScrollDirective } from '../@pv/directives/drag-scroll.directive';
+import { BoardFileViewComponent } from './components/board-file-view/board-file-view.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { DragScrollDirective } from '../@pv/directives/drag-scroll.directive';
     BoardFabsComponent,
 
     DragScrollDirective,
+     BoardFileViewComponent,
   ],
   imports: [
     BrowserModule,

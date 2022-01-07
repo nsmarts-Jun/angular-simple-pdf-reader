@@ -25,9 +25,9 @@ export class RenderingService {
    * @param {number} pageNum 페이지 번호
    * @param {element} canvas <canvas>
    */
-  async renderThumbBackground(imgElement, pageNum) {
+  async renderThumbBackground(imgElement, pdfNum, pageNum) {
     // console.log('> renderThumbnail Background');
-    const pdfPage = this.pdfStorageService.getPdfPage(pageNum);
+    const pdfPage = this.pdfStorageService.getPdfPage(pdfNum, pageNum);
 
 
     // 배경 처리를 위한 임시 canvas
@@ -68,7 +68,12 @@ export class RenderingService {
   async renderBackground(tmpCanvas, bgCanvas, pageNum) {
     console.log(`>>>> renderBackground, pageNum: ${pageNum}`);
 
-    const pdfPage = this.pdfStorageService.getPdfPage(pageNum);
+    /** 
+    * 꼭 수정해야해------------------------------------------------------------
+    *
+    * 
+    */ 
+    const pdfPage = this.pdfStorageService.getPdfPage(bgCanvas, pageNum);
     if (!pdfPage) {
       return;
     }

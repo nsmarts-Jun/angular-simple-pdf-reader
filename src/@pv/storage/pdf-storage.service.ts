@@ -9,41 +9,42 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/lib/pdf/pdf.worker.js';
 })
 
 export class PdfStorageService {
-
-  private _pdfVar: any = {
-    pdfPages: []
-  };
+  private _pdfVarArray: Array<any> = [];
 
   constructor() { }
 
 
-  get pdfVar(): any {
-    return this._pdfVar;
+  get pdfVarArray(): any {
+    return [...this._pdfVarArray];
   }
 
-  setPdfVar(pdfVar) {
-    this._pdfVar = pdfVar;
+  setPdfVarArray(pdfVarArray) {
+    this._pdfVarArray = pdfVarArray;
   }
 
+
+  getPdfLength() {
+    return this._pdfVarArray.length;
+  }
 
   /**
    * pdf Page return
    * @param {number} pageNum 페이지 번호
    * @return 해당 page의 pdf document
   */
-  getPdfPage(pageNum) {
-    return this._pdfVar.pdfPages[pageNum - 1];
+  getPdfPage(pdfNum, pageNum) {
+    return this._pdfVarArray[pdfNum - 1]?.pdfPages[pageNum - 1];
   }
+
 
   /**
    * 해당 page의 scale 1에 해당하는 viewport size.
    * @param {number} pageNum 페이지 번호
   */
-  getViewportSize(pageNum) {
-    // console.log(`> get ViewPort size: pageNum : ${pageNum}`);
-    return this._pdfVar.pdfPages[pageNum - 1].getViewport({ scale: 1 });
+  getViewportSize(docNum, pageNum) {
+    // console.log(`> get ViewPort size: docNum : ${docNum}, pageNum : ${pageNum}`);
+    return this._pdfVarArray[docNum - 1].pdfPages[pageNum - 1].getViewport({ scale: 1 });
   }
-
 
   /**
    * Memory Release
@@ -54,17 +55,20 @@ export class PdfStorageService {
   memoryRelease() {
     // console.log('PDF Memeory Release');
 
-    if (this._pdfVar.pdfDestroy) {
-      this._pdfVar.pdfDestroy.cleanup();
-      this._pdfVar.pdfDestroy.destroy();
-    }
+    for (const item of this._pdfVarArray) {
+      if (item.pdfDestroy) {
+        item.pdfDestroy.cleanup();
+        item.pdfDestroy.destroy();
+      }
 
-    for (const pdfPage of this._pdfVar.pdfPages) {
-      pdfPage.cleanup();
-    }
+      for (const pdfPage of item.pdfPages) {
+        pdfPage.cleanup();
+      }
 
-    this._pdfVar.pdfDestroy = '';
-    this._pdfVar.pdfPages = [];
+      item.pdfDestroy = '';
+      item.pdfPages = [];
+
+    }
   }
 
 }

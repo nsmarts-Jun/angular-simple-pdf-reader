@@ -159,14 +159,20 @@ export class BoardSlideViewComponent implements OnInit {
   }
 
 
-
+  /**
+   * File list로 이동
+   */
+   backToFileList() {
+    this.viewInfoService.setViewInfo({ leftSideView: 'fileList' });
+  }
 
   /**
    * 문서 Load에 따른 thumbnail 생성 및 Rendering
    *
    */
   async renderThumbnails() {
-    const numPages = this.viewInfoService.state.numPages;
+    // const numPages = this.viewInfoService.state.numPages;
+    const numPages = this.viewInfoService.state.documentInfo[this.currentDocNum - 1].numPages;
 
     this.thumbArray = [];
 
@@ -183,7 +189,7 @@ export class BoardSlideViewComponent implements OnInit {
 
     // Thumbnail Background (PDF)
     for (let i = 0; i < this.thumRef.toArray().length; i++) {
-      await this.renderingService.renderThumbBackground(this.thumRef.toArray()[i].nativeElement, i + 1);
+      await this.renderingService.renderThumbBackground(this.thumRef.toArray()[i].nativeElement, this.currentDocNum, i + 1);
     };
 
 
