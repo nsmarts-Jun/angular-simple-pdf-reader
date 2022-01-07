@@ -30,6 +30,10 @@ export class AppComponent implements OnInit {
 
   private unsubscribe$ = new Subject<void>();
   private meetingId;
+  id;
+
+  // Left Side Bar
+  leftSideView;
 
   constructor(
     private viewInfoService: ViewInfoService,
@@ -41,7 +45,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // sidebar의 view mode : HTML 내에서 사용
+    this.viewInfoService.state$
+      .pipe(takeUntil(this.unsubscribe$), pluck('leftSideView'))
+      .subscribe((leftSideView) => {
+        this.leftSideView = leftSideView;
 
+        console.log('[info] current Left Side View: ', leftSideView);
+      });
 
   }
   ///////////////////////////////////////////////////////////
@@ -62,14 +73,15 @@ export class AppComponent implements OnInit {
    */
   async onDocumentOpened(newDocumentFile) {
 
-    this.pdfStorageService.memoryRelease();
+    // this.pdfStorageService.memoryRelease();
 
     const numPages = await this.fileService.openDoc(newDocumentFile);
     // console.log(this.pdfStorageService.pdfVar);
     const obj = {
       isDocLoaded: true,
       loadedDate: new Date().getTime(),
-      numPages : numPages,
+      numPages: numPages,
+      currentDocNum: 1,
       currentPage: 1,
       zoomScale: this.zoomService.setInitZoomScale()
     };

@@ -46,8 +46,8 @@ export class CanvasService {
 			getThumbnailSize
 			- 각 thumbnail 별 canvas width/height
 		----------------------------------------*/
-	getThumbnailSize(pageNum) {
-		const viewport = this.pdfStorageService.getViewportSize(pageNum);
+	getThumbnailSize(docNum,pageNum) {
+		const viewport = this.pdfStorageService.getViewportSize(docNum,pageNum);
 
 		const size = {
 			width: 0,
@@ -74,10 +74,10 @@ export class CanvasService {
 	 * Main container관련 canvas Size 설정
 	 *
 	 */
-	setCanvasSize(pageNum, zoomScale, canvasContainer, bgCanvas) {
-    console.log(`>>> set Canvas Size: pageNum:${pageNum}`)
+	setCanvasSize(pdfNum, pageNum, zoomScale, canvasContainer, bgCanvas) {
+	console.log(`>>> set Canvas Size: pdfNum:${pdfNum}, pageNum:${pageNum}`)
 
-    const pdfPage = this.pdfStorageService.getPdfPage(pageNum);
+    const pdfPage = this.pdfStorageService.getPdfPage(pdfNum, pageNum);
 		const canvasFullSize = pdfPage.getViewport({scale:zoomScale * CANVAS_CONFIG.CSS_UNIT});
 		canvasFullSize.width = Math.round(canvasFullSize.width);
 		canvasFullSize.height = Math.round(canvasFullSize.height);

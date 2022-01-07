@@ -27,18 +27,26 @@ export class FileService {
 	async openDoc(aFile) {
 
     console.log('>> open PDF File');
-
-		const file = await this.readFile(aFile);
-
+    console.log(aFile)
+    // 현재 저장된 PDF Array 변수
+    let pdfVarArray = this.pdfStorageService.pdfVarArray;
+		// 업로드한 파일 buffer형식으로 변환
+    const file = await this.readFile(aFile);
+    // pdf에 대한 정보를 담을 객체 선언
 		const pdfVar:any = {};
-
+    // 객체에 버퍼 담기
 		pdfVar.fileBuffer = file;
+    // buffer 형식의 pdf에서 데이터 추출 (페이지 수 등)
 		const results = await this.pdfConvert(file);
 
 		pdfVar.pdfPages = results.pdfPages; //pdf 문서의 page별 정보
 		pdfVar.pdfDestroy = results.pdfDoc;
-		// console.log(pdfVar);
-		this.pdfStorageService.setPdfVar(pdfVar);
+
+		console.log(pdfVar);
+    pdfVarArray.push(pdfVar)
+    console.log(pdfVarArray)
+    //  PDF Docouments storage에 저장
+		this.pdfStorageService.setPdfVarArray(pdfVarArray);
 
     return results.pdfPages.length;
   }

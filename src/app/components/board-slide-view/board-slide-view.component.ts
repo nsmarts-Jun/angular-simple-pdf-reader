@@ -66,10 +66,16 @@ export class BoardSlideViewComponent implements OnInit {
         if (!viewInfo.isDocLoaded) return;
 
         // 현재 Current Page Info 저장
-        this.currentPageNum = viewInfo.currentPage;
+        this.currentDocId = viewInfo.pageInfo.currentDocId;
+        this.currentDocNum = viewInfo.pageInfo.currentDocNum;
+        this.currentPageNum = viewInfo.pageInfo.currentPage;
 
         // File이 변경된 경우 thumbnail 다시 그리기
-        if (prevViewInfo.loadedDate !== viewInfo.loadedDate) {
+        // if (prevViewInfo.loadedDate !== viewInfo.loadedDate) {
+        //   this.renderThumbnails();
+        // }
+        // Thumbnail Mode로 전환된 경우 Thumbnail Rendering
+        if (prevViewInfo.leftSideView != 'thumbnail' && viewInfo.leftSideView == 'thumbnail') {
           this.renderThumbnails();
         }
 
@@ -181,7 +187,7 @@ export class BoardSlideViewComponent implements OnInit {
         1. get size of thumbnail canvas --> thumbnail element 생성.
         - width, height, scale return.
       --------------------------------------------------------------*/
-      const thumbSize = this.canvasService.getThumbnailSize(pageNum);
+      const thumbSize = this.canvasService.getThumbnailSize(this.currentDocNum, pageNum);
       this.thumbArray.push(thumbSize);
     }
 

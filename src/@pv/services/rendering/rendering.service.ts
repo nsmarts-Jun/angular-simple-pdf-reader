@@ -65,15 +65,10 @@ export class RenderingService {
    * - pending 처리 포함
    * @param pageNum page 번호
    */
-  async renderBackground(tmpCanvas, bgCanvas, pageNum) {
-    console.log(`>>>> renderBackground, pageNum: ${pageNum}`);
+  async renderBackground(tmpCanvas, bgCanvas, pdfNum, pageNum) {
+    console.log(`>>>> renderBackground, pdfNum: ${pdfNum}, pageNum: ${pageNum}`);
 
-    /** 
-    * 꼭 수정해야해------------------------------------------------------------
-    *
-    * 
-    */ 
-    const pdfPage = this.pdfStorageService.getPdfPage(bgCanvas, pageNum);
+    const pdfPage = this.pdfStorageService.getPdfPage(pdfNum, pageNum);
     if (!pdfPage) {
       return;
     }
@@ -89,7 +84,7 @@ export class RenderingService {
       this.isPageRendering = false;
 
       if (this.pageNumPending) {
-        this.renderBackground(tmpCanvas, bgCanvas, this.pageNumPending);
+        this.renderBackground(tmpCanvas, bgCanvas, pdfNum, this.pageNumPending);
         this.pageNumPending = null;
       }
     }

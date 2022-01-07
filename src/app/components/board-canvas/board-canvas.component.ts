@@ -145,11 +145,11 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
    * @param currentPage
    * @param zoomScale
    */
-  pageRender(currentPage, zoomScale) {
+  pageRender(currentPage, currentDocNum, zoomScale) {
     console.log('>>> page Render!');
 
     // PDF Rendering
-    this.renderingService.renderBackground(this.tmpCanvas, this.bgCanvas, currentPage);
+    this.renderingService.renderBackground(this.tmpCanvas, this.bgCanvas, currentDocNum, currentPage);
 
   }
 
@@ -159,10 +159,12 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
    *
    */
   onResize() {
-    if (!this.viewInfoService.state.isDocLoaded) return;
+    // if (!this.viewInfoService.state.isDocLoaded) return;
 
     // Resize시 container size 조절.
     const ratio = this.canvasService.setContainerSize(this.canvasContainer);
+
+    if (this.viewInfoService.state.leftSideView != 'thumbnail') return;
 
     // thumbnail window 크기 변경을 위한 처리.
     this.eventBusService.emit(new EventData("change:containerSize", {
@@ -176,7 +178,8 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
    * Scroll 발생 시
    */
   onScroll() {
-    if (!this.viewInfoService.state.isDocLoaded) return;
+    if (this.viewInfoService.state.leftSideView != 'thumbnail') return;
+    // if (!this.viewInfoService.state.isDocLoaded) return;
 
     this.eventBusService.emit(new EventData('change:containerScroll', {
       left: this.canvasContainer.scrollLeft,
@@ -193,33 +196,34 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
      * - scale 변경하는 경우
      */
   onChangePage() {
-
     //document Number -> 1부터 시작.
+    const docNum = this.viewInfoService.state.currentDocNum;
     const pageNum = this.viewInfoService.state.currentPage;
     const zoomScale = this.viewInfoService.state.zoomScale;
 
     console.log(`>> changePage to page: ${pageNum}, scale: ${zoomScale} `);
 
     // set Canvas Size
-    const ratio = this.canvasService.setCanvasSize(pageNum, zoomScale, this.canvasContainer, this.bgCanvas);
+    const ratio = this.canvasService.setCanvasSize(docNum, pageNum, zoomScale, this.canvasContainer, this.bgCanvas);
 
     // BG & Board Render
-    this.pageRender(pageNum, zoomScale);
+    this.pageRender(docNum, pageNum, zoomScale);
+
 
     // Thumbnail window 조정
-
-    this.eventBusService.emit(new EventData('change:containerSize', {
-      ratio,
-      coverWidth: this.canvasService.canvasFullSize.width,
-    }));
-
-    // scroll bar가 있는 경우 page 전환 시 초기 위치로 변경
-    this.canvasContainer.scrollTop = 0;
-    this.canvasContainer.scrollLeft = 0;
-  };
-
+    if (this.viewInfoService.state.leftSideView === 'thumbnail') {
+      this.eventBusService.emit(new EventData('change:containerSize', {
+        ratio,
+        coverWidth: this.canvasService.canvasFullSize.width
+      }));
+      // scroll bar가 있는 경우 page 전환 시 초기 위치로 변경
+      this.canvasContainer.scrollTop = 0;
+      this.canvasContainer.scrollLeft = 0;
+    };
 
 
+
+
+  }
 
 }
-

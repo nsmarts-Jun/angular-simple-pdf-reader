@@ -28,7 +28,7 @@ export class ZoomService {
       width: CANVAS_CONFIG.maxContainerWidth,
       height: CANVAS_CONFIG.maxContainerHeight
     };
-    const pdfPage: any = this.pdfStorageService.getPdfPage(1);
+    const pdfPage: any = this.pdfStorageService.getPdfPage(1, 1);
 
 
     // console.log(pdfPage)
@@ -74,7 +74,7 @@ export class ZoomService {
   }
 
   // zoomscale 결정(zoomin, zoomout, fit to page .... etc)
-  calcZoomScale(zoomInfo, pageNum, prevZoomScale = 1) {
+  calcZoomScale(zoomInfo, docNum, pageNum, prevZoomScale = 1) {
 
     let zoomScale = 1;
 
@@ -89,12 +89,12 @@ export class ZoomService {
 
       // 너비에 맞춤
       case 'fitToWidth':
-        zoomScale = this.fitToWidth(pageNum);
+        zoomScale = this.fitToWidth(docNum, pageNum);
         break;
 
       // page에 맞춤
       case 'fitToPage':
-        zoomScale = this.fitToPage(pageNum);
+        zoomScale = this.fitToPage(docNum, pageNum);
         break;
     }
 
@@ -128,12 +128,12 @@ export class ZoomService {
   }
 
   // page 폭에 맞추기
-  fitToWidth(currentPage) {
+  fitToWidth(currentDoc, currentPage) {
     const containerSize = {
       width: CANVAS_CONFIG.maxContainerWidth,
       height: CANVAS_CONFIG.maxContainerHeight
     };
-    const pdfPage: any = this.pdfStorageService.getPdfPage(currentPage);
+    const pdfPage: any = this.pdfStorageService.getPdfPage(currentDoc, currentPage);
     const docSize = pdfPage.getViewport({scale: 1 * CANVAS_CONFIG.CSS_UNIT});
 
     const zoomScale = containerSize.width / docSize.width;
@@ -142,13 +142,13 @@ export class ZoomService {
   }
 
   // page에 맞추기
-  fitToPage(currentPage) {
+  fitToPage(currentDoc, currentPage) {
     const containerSize = {
       width: CANVAS_CONFIG.maxContainerWidth,
       height: CANVAS_CONFIG.maxContainerHeight
     };
 
-    const pdfPage: any = this.pdfStorageService.getPdfPage(currentPage);
+    const pdfPage: any = this.pdfStorageService.getPdfPage(currentDoc, currentPage);
     const docSize = pdfPage.getViewport({scale: 1 * CANVAS_CONFIG.CSS_UNIT}); // 100%에 해당하는 document의 size (Css 기준)
 
     const ratio = {
