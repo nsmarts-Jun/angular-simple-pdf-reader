@@ -4,9 +4,9 @@ import { Store } from './store';
 
 class InitViewInfo {
   leftSideView = 'fileList';
+  documentInfo = []; // {currentPage: 1,  numPages: 1}
   pageInfo = {
-    isDocLoaded: false,
-    loadedDate : new Date().getTime(),
+    currentDocId : '',
     numPages : 1,
     currentDocNum : 1,
     currentPage : 1,
@@ -63,11 +63,9 @@ export class ViewInfoService extends Store<any> {
   changeToThumbnailView(docId: any): void {
 
     const pageInfo = Object.assign({}, this.state.pageInfo);
-
     pageInfo.currentDocId = docId;
     pageInfo.currentDocNum = this.state.documentInfo.findIndex((item) => item._id == docId) + 1;
     pageInfo.currentPage = this.state.documentInfo.find((item) => item._id === docId)?.currentPage || 1;
-
     const obj: any = {
       leftSideView: 'thumbnail',
       pageInfo: pageInfo

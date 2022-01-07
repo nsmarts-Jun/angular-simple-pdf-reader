@@ -76,16 +76,36 @@ export class AppComponent implements OnInit {
     // this.pdfStorageService.memoryRelease();
 
     const numPages = await this.fileService.openDoc(newDocumentFile);
-    // console.log(this.pdfStorageService.pdfVar);
-    const obj = {
-      isDocLoaded: true,
-      loadedDate: new Date().getTime(),
-      numPages: numPages,
-      currentDocNum: 1,
-      currentPage: 1,
-      zoomScale: this.zoomService.setInitZoomScale()
-    };
 
+    const documentInfo = [...this.viewInfoService.state.documentInfo];
+    
+    for (let item of this.pdfStorageService.pdfVarArray) {
+      // 기존에 없던 문서인 경우 추가
+      const isExist = documentInfo.some((doc) => doc._id === item._id)
+      if (!isExist) {
+        documentInfo.push({
+          _id: item._id,
+          currentPage: 1,
+          numPages: item.pdfPages.length,
+          // fileName: item.fileName
+        });
+      }
+
+    };
+    // console.log(this.pdfStorageService.pdfVar);
+    const obj: any = {
+      documentInfo: documentInfo
+    }
+
+    // 최초 load인 경우 document ID는 처음 것으로 설정
+    if (!this.viewInfoService.state.pageInfo.currentDocId) {
+      obj.pageInfo = {
+        currentDocId: documentInfo[0]._id,
+        currentDocNum: 1,
+        currentPage: 1,
+        zoomScale: this.zoomService.setInitZoomScale()
+      }
+    }
     this.viewInfoService.setViewInfo(obj);
 
   }

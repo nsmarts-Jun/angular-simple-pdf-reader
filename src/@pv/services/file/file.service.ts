@@ -38,7 +38,8 @@ export class FileService {
 		pdfVar.fileBuffer = file;
     // buffer 형식의 pdf에서 데이터 추출 (페이지 수 등)
 		const results = await this.pdfConvert(file);
-
+    // pdf id 랜덤으로 준다.
+    pdfVar._id = Math.random().toString(36).substr(2,11);
 		pdfVar.pdfPages = results.pdfPages; //pdf 문서의 page별 정보
 		pdfVar.pdfDestroy = results.pdfDoc;
 
