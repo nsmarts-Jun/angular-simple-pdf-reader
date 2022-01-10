@@ -107,7 +107,6 @@ export class AppComponent implements OnInit {
       }
     }
     this.viewInfoService.setViewInfo(obj);
-
   }
 
 }

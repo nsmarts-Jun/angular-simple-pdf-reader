@@ -98,13 +98,23 @@ export class BoardFileViewComponent implements OnInit {
     const deletedPdfVarArray = this.pdfStorageService.pdfVarArray.filter(x => x._id !== docId)
     console.log(deletedPdfVarArray)
     this.pdfStorageService.setPdfVarArray(deletedPdfVarArray);
+    console.log(this.pdfStorageService.pdfVarArray);
 
     const prevDocumentInfo = [...this.viewInfoService.state.documentInfo];
     const deletedDocumentInfo = prevDocumentInfo.filter(x => x._id !== docId)
     console.log(this.viewInfoService.state.pageInfo)
+
     const obj: any = {
-      documentInfo: deletedDocumentInfo
+      documentInfo: deletedDocumentInfo,
+      // pdf 삭제 시 제일 첫 pdf 파일 렌더링
+      pageInfo:{
+        currentDocId : 'delete',
+        currentDocNum : 0,
+        currentPage : 0,
+        zoomScale : 1,
+      }
     }
+
 
     this.viewInfoService.setViewInfo(obj);
   }

@@ -70,7 +70,7 @@ export class RenderingService {
 
     const pdfPage = this.pdfStorageService.getPdfPage(pdfNum, pageNum);
     if (!pdfPage) {
-      return;
+
     }
 
     if (this.isPageRendering) {

@@ -204,6 +204,23 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
      * - scale 변경하는 경우
      */
   onChangePage() {
+    // 다큐먼트 삭제 시
+    console.log(this.viewInfoService.state.pageInfo.currentDocId)
+    if(this.viewInfoService.state.pageInfo.currentDocId == 'delete'){
+      console.log('delete---------------------------')
+      const bgCanvasContext = this.bgCanvas.getContext('2d');
+      bgCanvasContext.clearRect(0, 0, this.bgCanvas.width, this.bgCanvas.height);
+      bgCanvasContext.fillStyle = 'white';
+      bgCanvasContext.fillRect(0, 0, this.bgCanvas.width, this.bgCanvas.height);
+      const tmpCanvasContext = this.tmpCanvas.getContext('2d');
+      tmpCanvasContext.clearRect(0, 0, this.tmpCanvas.width, this.tmpCanvas.height);
+      tmpCanvasContext.fillStyle = 'white';
+      bgCanvasContext.fillRect(0, 0, this.bgCanvas.width, this.bgCanvas.height);
+      this.viewInfoService.state.pageInfo.currentDocId = null;
+      return;
+    }
+
+    
     const pageInfo = this.viewInfoService.state.pageInfo;
     //document Number -> 1부터 시작.
     const docNum = pageInfo.currentDocNum;
