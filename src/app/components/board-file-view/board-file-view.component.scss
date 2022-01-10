@@ -52,10 +52,11 @@
     display: none;
 }
 
-.thumb-item .settingIcon {
+.thumb-item .deleteChatBtn {
     visibility: hidden;
 }
 
-.thumb-item:hover .settingIcon{
+.thumb-item:hover .deleteChatBtn{
 	visibility: visible;
 }
+

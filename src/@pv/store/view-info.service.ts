@@ -32,7 +32,6 @@ export class ViewInfoService extends Store<any> {
     });
   }
 
-
   /**
    * 페이지 변경에 따른 Data Update
    *

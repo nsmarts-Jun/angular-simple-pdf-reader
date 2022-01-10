@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, Output, QueryList, ViewChildren, EventEm
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, pluck, takeUntil } from 'rxjs/operators';
 import { RenderingService } from 'src/@pv/services/rendering/rendering.service';
+import { PdfStorageService } from 'src/@pv/storage/pdf-storage.service';
 import { ViewInfoService } from 'src/@pv/store/view-info.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class BoardFileViewComponent implements OnInit {
   constructor(
     private renderingService: RenderingService,
     private viewInfoService: ViewInfoService,
+    private pdfStorageService: PdfStorageService
   ) {
 
   }
@@ -57,7 +59,6 @@ export class BoardFileViewComponent implements OnInit {
     for (let i = 0; i < this.thumRef.toArray().length; i++) {
       await this.renderingService.renderThumbBackground(this.thumRef.toArray()[i].nativeElement, i + 1, 1);
     };
-
     // 아래와 같은 방식도 사용가능(참고용)
     // https://stackoverflow.com/questions/55737546/access-nth-child-of-viewchildren-querylist-angular
     // this.thumRef.forEach((element, index) => {
@@ -78,6 +79,36 @@ export class BoardFileViewComponent implements OnInit {
     this.viewInfoService.changeToThumbnailView(docId);
   }
 
+
+  /**
+  * File List 에서 각 document 클릭
+  *  - 해당 문서의 Thumbanil 표시화면으로 이동
+  *  - viewInfo를 update
+  * @param docId document ID
+  */
+  deletePdf(docId) {
+    // thumbnail-container(div) 안에 delete(button)이 존재
+    // 2개의 엘리먼트가 동시에 이벤트 발생하는것을 막는 함수 (이벤트 버블링 이슈)
+    // https://webisfree.com/2016-06-15/[%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8]-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EB%B2%84%EB%B8%94%EB%A7%81-%EC%A0%9C%EA%B1%B0%EB%B0%A9%EB%B2%95-stoppropagation()
+    event.stopPropagation();
+    console.log(docId)
+    console.log('>> click PDF : delete');
+
+    console.log(this.pdfStorageService.pdfVarArray);
+    const deletedPdfVarArray = this.pdfStorageService.pdfVarArray.filter(x => x._id !== docId)
+    console.log(deletedPdfVarArray)
+    this.pdfStorageService.setPdfVarArray(deletedPdfVarArray);
+
+    const prevDocumentInfo = [...this.viewInfoService.state.documentInfo];
+    const deletedDocumentInfo = prevDocumentInfo.filter(x => x._id !== docId)
+    console.log(this.viewInfoService.state.pageInfo)
+    const obj: any = {
+      documentInfo: deletedDocumentInfo
+    }
+
+    this.viewInfoService.setViewInfo(obj);
+  }
+  
 
   /**
    * 새로운 File Load (Local)
