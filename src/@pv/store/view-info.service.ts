@@ -85,8 +85,10 @@ export class ViewInfoService extends Store<any> {
    * @param Zoom
    */
   updateZoomScale(newZoomScale): void {
+    const pageInfo = Object.assign({}, this.state.pageInfo);
+    pageInfo.zoomScale = newZoomScale;
     this.setState({
-      ...this.state, zoomScale: newZoomScale
+      ...this.state, pageInfo: pageInfo
     })
   }
 

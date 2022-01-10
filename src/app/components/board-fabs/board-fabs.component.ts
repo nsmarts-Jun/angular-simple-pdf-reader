@@ -31,11 +31,14 @@ export class BoardFabsComponent implements OnInit {
    */
   clickZoom(action:any){
     console.log(">> Click Zoom: ", action);
-    const docNum = this.viewInfoService.state.currentDocNum;
-    const currentPage = this.viewInfoService.state.currentPage;
-    const prevZoomScale = this.viewInfoService.state.zoomScale;
+    const pageInfo = this.viewInfoService.state.pageInfo;
+    //document Number -> 1부터 시작.
+    const docNum = pageInfo.currentDocNum;
+    const currentPage = pageInfo.currentPage;
+    const prevZoomScale = pageInfo.zoomScale;
 
     const newZoomScale = this.zoomService.calcZoomScale(action, docNum, currentPage, prevZoomScale);
+    console.log(newZoomScale)
 
     this.viewInfoService.updateZoomScale(newZoomScale);
 

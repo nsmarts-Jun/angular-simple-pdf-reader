@@ -76,6 +76,11 @@ export class ZoomService {
   // zoomscale 결정(zoomin, zoomout, fit to page .... etc)
   calcZoomScale(zoomInfo, docNum, pageNum, prevZoomScale = 1) {
 
+    console.log('zoomInfo:', zoomInfo)
+    console.log('docNum:', docNum)
+    console.log('pageNum:', pageNum)
+    console.log('prevZoomScale:', prevZoomScale)
+
     let zoomScale = 1;
 
     switch (zoomInfo) {
