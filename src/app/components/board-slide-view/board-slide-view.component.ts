@@ -62,14 +62,16 @@ export class BoardSlideViewComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$), distinctUntilChanged(), pairwise())
       .subscribe(([prevViewInfo, viewInfo]) => {
 
-        // 문서가 로드되지 않은 경우
-        if (!viewInfo.isDocLoaded) return;
+        // // 문서가 로드되지 않은 경우
+        // if (!viewInfo.isDocLoaded) return;
 
         // 현재 Current Page Info 저장
         this.currentDocId = viewInfo.pageInfo.currentDocId;
         this.currentDocNum = viewInfo.pageInfo.currentDocNum;
         this.currentPageNum = viewInfo.pageInfo.currentPage;
-
+        console.log(this.currentDocId)
+        console.log(this.currentDocNum)
+        console.log(this.currentPageNum)
         // File이 변경된 경우 thumbnail 다시 그리기
         // if (prevViewInfo.loadedDate !== viewInfo.loadedDate) {
         //   this.renderThumbnails();

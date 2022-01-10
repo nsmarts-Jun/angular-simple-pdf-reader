@@ -78,10 +78,18 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
     ////////////////////////////////////////////////
     // Document가 Update 된 경우 (zoom, page change 등)
     this.viewInfoService.state$
-      .pipe(takeUntil(this.unsubscribe$), distinctUntilChanged())
-      .subscribe((viewInfo) => {
+      .pipe(takeUntil(this.unsubscribe$), pluck('pageInfo'), distinctUntilChanged())
+      .subscribe((pageInfo) => {
+        // 이전 코드
+        // .subcribe((viewInfo)) => {
+        // if (viewInfo.isDocLoaded) {
+        //   this.onChangePage();
+        // }
 
-        if (viewInfo.isDocLoaded) {
+        // 초기 load 포함 변경사항에 대해 수행
+        // (doc change, page change, zoom change 등)
+        if (pageInfo.currentDocId) {
+          console.log(pageInfo.currentDocId)
           this.onChangePage();
         }
 
@@ -145,7 +153,7 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
    * @param currentPage
    * @param zoomScale
    */
-  pageRender(currentPage, currentDocNum, zoomScale) {
+  pageRender(currentDocNum, currentPage, zoomScale) {
     console.log('>>> page Render!');
 
     // PDF Rendering
@@ -196,11 +204,14 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
      * - scale 변경하는 경우
      */
   onChangePage() {
+    const pageInfo = this.viewInfoService.state.pageInfo;
     //document Number -> 1부터 시작.
-    const docNum = this.viewInfoService.state.currentDocNum;
-    const pageNum = this.viewInfoService.state.currentPage;
-    const zoomScale = this.viewInfoService.state.zoomScale;
-
+    const docNum = pageInfo.currentDocNum;
+    const pageNum = pageInfo.currentPage;
+    const zoomScale = pageInfo.zoomScale;
+    console.log("docNum: ",docNum)
+    console.log("pageNum: ",pageNum)
+    console.log("zoomScale: ", zoomScale)
     console.log(`>> changePage to page: ${pageNum}, scale: ${zoomScale} `);
 
     // set Canvas Size

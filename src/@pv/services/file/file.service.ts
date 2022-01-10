@@ -48,7 +48,7 @@ export class FileService {
     console.log(pdfVarArray)
     //  PDF Docouments storage에 저장
 		this.pdfStorageService.setPdfVarArray(pdfVarArray);
-
+    console.log(this.pdfStorageService.pdfVarArray)
     return results.pdfPages.length;
   }
 

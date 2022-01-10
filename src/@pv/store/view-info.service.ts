@@ -75,6 +75,7 @@ export class ViewInfoService extends Store<any> {
     this.setState({
       ...this.state, ...obj
     })
+    console.log(this.state)
   }
 
 
