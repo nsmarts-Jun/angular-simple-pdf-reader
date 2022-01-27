@@ -153,11 +153,29 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
    * @param currentPage
    * @param zoomScale
    */
-  pageRender(currentDocNum, currentPage, zoomScale) {
+  async pageRender(currentDocNum, currentPage, zoomScale) {
     console.log('>>> page Render!');
-
+    // 화면을 급하게 확대하거나 축소 시 깜빡거리는 UI 측면 문제 해결 위한 함수
+    await this.preRenderBackground(currentPage)
     // PDF Rendering
     this.renderingService.renderBackground(this.tmpCanvas, this.bgCanvas, currentDocNum, currentPage);
+
+  }
+
+  /**
+     * Background pre rendering
+     * - Main bg를 그리기 전에 thumbnail image 기준으로 배경을 미리 그림.
+     * - UI 측면의 효과
+     * @param pageNum page 번호
+     */
+  preRenderBackground(pageNum) {
+    const targetCanvas = this.bgCanvas
+    console.log(targetCanvas)
+    const ctx = targetCanvas.getContext("2d");
+    const imgElement: any = document.getElementById('thumb' + pageNum);
+    if(imgElement != null){
+        ctx.drawImage(imgElement, 0, 0, targetCanvas.width, targetCanvas.height);
+    }
 
   }
 
@@ -204,7 +222,7 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
      * - scale 변경하는 경우
      */
   onChangePage() {
-    // 다큐먼트 삭제 시
+    // 다큐먼트 삭제 시 캔버스지우기
     console.log(this.viewInfoService.state.pageInfo.currentDocId)
     if(this.viewInfoService.state.pageInfo.currentDocId == 'delete'){
       console.log('delete---------------------------')
