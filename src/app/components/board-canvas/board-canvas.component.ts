@@ -79,21 +79,21 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
     // Document가 Update 된 경우 (zoom, page change 등)
     this.viewInfoService.state$
       .pipe(takeUntil(this.unsubscribe$), pluck('pageInfo'), distinctUntilChanged())
-    //   .subscribe((pageInfo) => {
+      .subscribe((pageInfo) => {
         // 이전 코드
-        .subcribe((viewInfo)) => {
-        if (viewInfo.isDocLoaded) {
-          this.onChangePage();
-        }
+        // .subcribe((viewInfo)) => {
+        // if (viewInfo.isDocLoaded) {
+        //   this.onChangePage();
+        // }
 
         // 초기 load 포함 변경사항에 대해 수행
         // (doc change, page change, zoom change 등)
-    //     if (pageInfo.currentDocId) {
-    //       console.log(pageInfo.currentDocId)
-    //       this.onChangePage();
-    //     }
+        if (pageInfo.currentDocId) {
+          console.log(pageInfo.currentDocId)
+          this.onChangePage();
+        }
 
-    //   });
+      });
     /////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////
