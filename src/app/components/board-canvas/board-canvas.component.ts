@@ -89,7 +89,7 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
         // 초기 load 포함 변경사항에 대해 수행
         // (doc change, page change, zoom change 등)
         if (pageInfo.currentDocId) {
-          console.log(pageInfo.currentDocId)
+        //   console.log(pageInfo.currentDocId)
           this.onChangePage();
         }
 
@@ -170,7 +170,7 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
      */
   preRenderBackground(pageNum) {
     const targetCanvas = this.bgCanvas
-    console.log(targetCanvas)
+    // console.log(targetCanvas)
     const ctx = targetCanvas.getContext("2d");
     const imgElement: any = document.getElementById('thumb' + pageNum);
     if(imgElement != null){
@@ -244,10 +244,10 @@ export class BoardCanvasComponent implements OnInit, OnDestroy {
     const docNum = pageInfo.currentDocNum;
     const pageNum = pageInfo.currentPage;
     const zoomScale = pageInfo.zoomScale;
-    console.log("docNum: ",docNum)
-    console.log("pageNum: ",pageNum)
-    console.log("zoomScale: ", zoomScale)
-    console.log(`>> changePage to page: ${pageNum}, scale: ${zoomScale} `);
+    // console.log("docNum: ",docNum)
+    // console.log("pageNum: ",pageNum)
+    // console.log("zoomScale: ", zoomScale)
+    // console.log(`>> changePage to page: ${pageNum}, scale: ${zoomScale} `);
 
     // set Canvas Size
     const ratio = this.canvasService.setCanvasSize(docNum, pageNum, zoomScale, this.canvasContainer, this.bgCanvas);
