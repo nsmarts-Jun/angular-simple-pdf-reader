@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewChild, HostListener } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {  Component, ElementRef,OnDestroy, OnInit, Renderer2, ViewChild, HostListener } from '@angular/core';
 import { Subject, fromEvent } from 'rxjs';
-import { pluck, takeUntil, distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { pluck, takeUntil, distinctUntilChanged } from 'rxjs/operators';
 
 import { CANVAS_CONFIG } from 'src/@pv/config/config';
 
