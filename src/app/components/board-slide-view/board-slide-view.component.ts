@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnChanges, OnInit, QueryList, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
+import {  Component, ElementRef,  OnInit, QueryList,  ViewChildren, Output, EventEmitter } from '@angular/core';
 
-import { Observable, Subject } from 'rxjs';
-import { pluck, takeUntil, distinctUntilChanged, pairwise } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil, distinctUntilChanged, pairwise } from 'rxjs/operators';
 
 
 import { CanvasService } from 'src/@pv/services/canvas/canvas.service';
