@@ -18,6 +18,9 @@
 ```
 ng serve
 ```
+```
+npm start
+```
 
 ![image](https://user-images.githubusercontent.com/91445932/146306759-729e253b-12e8-4c4f-b36f-84630571575c.png)
 
