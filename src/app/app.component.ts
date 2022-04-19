@@ -76,7 +76,7 @@ export class AppComponent implements OnInit {
     // this.pdfStorageService.memoryRelease();
 
     const numPages = await this.fileService.openDoc(newDocumentFile);
-    // console.log(numPages)
+
     const documentInfo = [...this.viewInfoService.state.documentInfo];
     
     for (let item of this.pdfStorageService.pdfVarArray) {
