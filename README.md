@@ -1,5 +1,5 @@
 # angular-simple-pdf-reader
-
+verson 2.0.0
 ## 개요
 
 웹 클라이언트 프레임워크인 Angular를 이용해, 국제 표준 전자 문서 형식인 PDF를 읽기, 저장, 공유 가능한 웹 서비스를 개발.
@@ -36,5 +36,3 @@ Open File 클릭, PDF 업로드
 Fab Button 클릭, 버튼에 따라 너비,길이,비율에 맞게 이미지 썸네일 렌더링
 
 ![image](https://user-images.githubusercontent.com/91445932/146307747-3d05ec56-bb00-4e11-8cb0-b1c61e776d61.png)
-
-
